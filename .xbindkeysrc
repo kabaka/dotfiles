@@ -1,0 +1,8 @@
+#"amixer set 'Master' 5%+"
+#m:0x0 + b:4
+#"amixer set 'Master' 5%-"
+#m:0x0 + b:5
+"zsh /home/kabaka/scripts/ss.sh"
+m:0x10 + c:127
+
+% xbindkeys
