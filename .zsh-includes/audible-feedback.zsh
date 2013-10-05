@@ -28,12 +28,11 @@ function precmd {
 
   exit_code=${?}
   if [ $exit_code = 0 ]; then
-    beep -f 440 -l 10
-     
+    #beep -f 440 -l 10
   fi
 
   if [ $exit_code != 0 ]; then
-    beep -f 110 -l 100
+    #beep -f 110 -l 100
   fi
 }
 
