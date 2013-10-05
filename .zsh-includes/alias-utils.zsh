@@ -1,4 +1,4 @@
-#alias ls='ls --color=always'
+alias ls='ls --color=always'
 #alias sl='ls --color=always'
 alias ndu='ncdu'
 alias v='vim'
