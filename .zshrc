@@ -25,6 +25,8 @@ zmodload -a zsh/zpty zpty
 zmodload -a zsh/zprof zprof
 #zmodload -ap zsh/mapfile mapfile
 
+autoload -U zmv
+
 export GREP_COLOR="1;33"
 export GPGKEY="A30E6576"
 
