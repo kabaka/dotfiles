@@ -136,21 +136,21 @@ vicious.register(netwidget, vicious.widgets.net,
 
 mpdwidget = wibox.widget.textbox()
 
-vicious.register(mpdwidget, vicious.widgets.mpd,
-  function (widget, args)
-    if args["{state}"] == "Stop" then 
-      return "No Music Playing"
-    else
-      split_pos = args["{time}"]:find(":")
-
-      elapsed_seconds = args["{time}"]:sub(0, split_pos-1)
-      elapsed_seconds = tonumber(elapsed_seconds)
-
-      duration_seconds = tonumber(args["{Time}"])
-      
-      return args["{Artist}"]..' - '.. args["{Title}"]
-    end
-  end, 5, {nil, "192.168.1.40", "6600"})
+--vicious.register(mpdwidget, vicious.widgets.mpd,
+--  function (widget, args)
+--    if args["{state}"] == "Stop" then
+--      return "No Music Playing"
+--    else
+--      split_pos = args["{time}"]:find(":")
+--
+--      elapsed_seconds = args["{time}"]:sub(0, split_pos-1)
+--      elapsed_seconds = tonumber(elapsed_seconds)
+--
+--      duration_seconds = tonumber(args["{Time}"])
+--
+--      return args["{Artist}"]..' - '.. args["{Title}"]
+--    end
+--  end, 5, {nil, "192.168.1.40", "6600"})
 
 
 
