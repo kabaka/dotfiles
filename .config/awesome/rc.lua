@@ -17,7 +17,7 @@ wibox       = require("wibox")
 -- Various Configuration Shit
 
 modkey      = "Mod4"
-terminal    = "xfce4-terminal"
+terminal    = "urxvtc"
 editor      = os.getenv("EDITOR") or "vim"
 editor_cmd  = terminal .. " -e " .. editor
 
