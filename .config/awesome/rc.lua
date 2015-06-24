@@ -24,7 +24,7 @@ editor_cmd  = terminal .. " -e " .. editor
 
 -- Themes define colours, icons, and wallpapers
 -- XXX: Update this!
-beautiful.init("/home/kabaka/.config/awesome/themes/kabaka/theme.lua")
+beautiful.init("~/.config/awesome/themes/kabaka/theme.lua")
 
 
 -- naughty.config.default_preset.font = "Bitstream Vera Sans Mono 13"
@@ -180,7 +180,7 @@ vicious.register(memtxtwidget, vicious.widgets.mem,
 
 
 weatherwidget = wibox.widget.textbox()
-weatherwidget:set_text(awful.util.pread("/home/kabaka/scripts/awesome/weather-standalone.rb"))
+weatherwidget:set_text(awful.util.pread("~/scripts/awesome/weather-standalone.rb"))
 
 weathertimer = timer({ timeout = 900 })
 
@@ -189,7 +189,7 @@ weathertimer:connect_signal("timeout",  function()
   weathertime:stop()
 
   weatherwidget:set_text(
-    awful.util.pread("/home/kabaka/scripts/awesome/weather-standalone.rb")
+    awful.util.pread("~/scripts/awesome/weather-standalone.rb")
   )
 
   weathertimer.timeout = 900
@@ -367,7 +367,7 @@ for s = 1, screen.count() do
 
   -- task lists are for pleebs
   --layout:set_middle(mytasklist[s])
-  
+
   layout:set_right(right_layout)
 
   mywibox[s]:set_widget(layout)
