@@ -4,3 +4,6 @@
 [submodule ".zsh-includes/git-extra-commands"]
 	path = .zsh-includes/git-extra-commands
 	url = https://github.com/unixorn/git-extra-commands
+[submodule ".config/awesome/vicious"]
+	path = .config/awesome/vicious
+	url = http://git.sysphere.org/vicious
