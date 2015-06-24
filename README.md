@@ -1,9 +1,13 @@
-# Home Directory
+# Dotfiles
 
-I tend to customize things just enough to do what I need. Lots of what I use
-(especially things such as `.vimrc`) are largely copy/pasted from references.
+My configuration files!
 
-You may or may not find these useful. Some of them will depend on specific
-installations or configuration data not shown here. Sorry. This README will be
-just as useless for now.
+Included are most `~/.*` files and directories.
+
+I will be updating this README file with information about these files, screen
+shots of the more interesting things, and whatever else seems relevant.
+
+## vim
+
+For my .vimrc and related files, see [my vimrc repository](/kabaka/vimrc).
 
