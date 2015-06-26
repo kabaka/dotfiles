@@ -32,7 +32,7 @@ export GPGKEY="A30E6576"
 
 SVN_EDITOR='vim'
 VISUAL='vim'
-PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:$PATH"
+PATH="$HOME/bin:$HOME/bin/local:/usr/local/bin:/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:$PATH"
 TZ="UTC"
 HISTFILE=$HOME/.zhistory
 HISTSIZE=1000
