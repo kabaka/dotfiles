@@ -1,5 +1,7 @@
 #!/bin/sh
 
+urxvtd -q -f -o
+
 setxkbmap -option compose:ralt
 xset b on
 xset r rate 200 25
