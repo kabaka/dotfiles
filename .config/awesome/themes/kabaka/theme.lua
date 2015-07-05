@@ -51,7 +51,7 @@ theme.titlebar_maximized_button_focus_inactive  = "/usr/share/awesome/themes/def
 theme.titlebar_maximized_button_normal_active   = "/usr/share/awesome/themes/default/titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active    = "/usr/share/awesome/themes/default/titlebar/maximized_focus_active.png"
 
-theme.wallpaper_cmd = { "feh --bg-center ~/media/visual/image/downloads/television/my-little-pony-friendship-is-magic/694003__safe_solo_twilight+sparkle_princess+twilight_cute_simple+background_artist-colon-dshou.png" }
+theme.wallpaper_cmd = { "/usr/bin/feh --bg-center /home/kyle/var/media/visual/image/downloads/television/my-little-pony-friendship-is-magic/694003__safe_solo_twilight+sparkle_princess+twilight_cute_simple+background_artist-colon-dshou.png" }
 
 
 -- You can use your own layout icons like this:
