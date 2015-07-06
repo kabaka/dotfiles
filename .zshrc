@@ -87,4 +87,5 @@ export PERL_MB_OPT="--install_base /home/kabaka/perl5";
 export PERL_MM_OPT="INSTALL_BASE=/home/kabaka/perl5";
 export PERL5LIB="/home/kabaka/perl5/lib/perl5/x86_64-linux-thread-multi:/home/kabaka/perl5/lib/perl5";
 export PATH="/home/kabaka/perl5/bin:$PATH";
+eval "$(dircolors ~/.dircolors)"
 
