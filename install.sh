@@ -6,11 +6,13 @@ BACKUP_PATH="${MY_PATH}/backup"
 
 echo "Installing from ${MY_PATH} to ${DEST_PATH}..."
 
+mkdir -p "${BACKUP_PATH}"
+
 for DOTFILE in "${MY_PATH}"/.*; do
   DOTFILE_BASENAME="$(basename "${DOTFILE}")"
 
   DEST_FILENAME="${DEST_PATH}/${DOTFILE_BASENAME}"
-  BACKUP_FILENAME="${BACKUP_PATH_PATH}/${DOTFILE_BASENAME}"
+  BACKUP_FILENAME="${BACKUP_PATH}/${DOTFILE_BASENAME}"
 
   if [[ $DOTFILE_BASENAME =~ ^\.\.?$ || ( $DOTFILE_BASENAME =~ "^.git.*$" && $DOTFILE_BASENAME != ".gitconfig" ) ]];
   then continue
@@ -23,8 +25,16 @@ for DOTFILE in "${MY_PATH}"/.*; do
 
     echo -n " cleaned..."
 
+  elif [ -d "${DEST_FILENAME}" ]; then
+    #mv "${DEST_FILENAME}" "${BACKUP_FILENAME}"
+
+    #echo -n " backed up..."
+
+    echo " SKIPPED - INSTALL MANUALLY"
+    continue
+
   elif [ -f "${DEST_FILENAME}" ]; then
-    cp -rav "${DEST_FILENAME}" "${BACKUP_FILENAME}"
+    mv "${DEST_FILENAME}" "${BACKUP_FILENAME}"
 
     echo -n " backed up..."
 
