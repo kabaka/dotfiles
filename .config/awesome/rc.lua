@@ -132,7 +132,7 @@ vicious.register(cputxtwidget, vicious.widgets.cpu,
 
 netwidget = wibox.widget.textbox()
 vicious.register(netwidget, vicious.widgets.net,
-  '<span color="#CC9393">${eth0 down_kb}</span> <span font_size="6000">KiB/s</span> <span color="#7F9F7F">${eth0 up_kb}</span> <span font_size="6000">KiB/s</span>',
+  '<span color="#CC9393">${enp2s0 down_kb}</span> <span font_size="6000">KiB/s</span> <span color="#7F9F7F">${enp2s0 up_kb}</span> <span font_size="6000">KiB/s</span>',
   1)
 
 mpdwidget = wibox.widget.textbox()
