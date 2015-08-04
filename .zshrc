@@ -40,7 +40,7 @@ SAVEHIST=10000
 HOSTNAME="`hostname`"
 PAGER='less'
 EDITOR='vim'
-
+BROWSER='chromium-browser'
 
 # I am not really a fan of this color thing, but it was copy/pasted and I am
 # too lazy to change.
