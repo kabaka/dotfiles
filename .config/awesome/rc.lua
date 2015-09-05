@@ -181,7 +181,7 @@ vicious.register(memtxtwidget, vicious.widgets.mem,
 
 
 weatherwidget = wibox.widget.textbox()
-weatherwidget:set_text(awful.util.pread("~/scripts/awesome/weather-standalone.rb"))
+weatherwidget:set_text(awful.util.pread("~/bin/weather.rb"))
 
 weathertimer = timer({ timeout = 900 })
 
@@ -190,7 +190,7 @@ weathertimer:connect_signal("timeout",  function()
   weathertime:stop()
 
   weatherwidget:set_text(
-    awful.util.pread("~/scripts/awesome/weather-standalone.rb")
+    awful.util.pread("~/bin/weather.rb")
   )
 
   weathertimer.timeout = 900
