@@ -25,10 +25,15 @@ zmodload -a zsh/zpty zpty
 zmodload -a zsh/zprof zprof
 #zmodload -ap zsh/mapfile mapfile
 
+autoload -U promptinit
 autoload -U zmv
+autoload -U edit-command-line
+
+promptinit
 
 export GREP_COLOR="1;33"
 export GPGKEY="A30E6576"
+export KEYTIMEOUT=1
 
 SVN_EDITOR='vim'
 VISUAL='vim'
@@ -55,15 +60,84 @@ for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
   eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
   (( count = $count + 1 ))
 done
+
 PR_NO_COLOR="%{$terminfo[sgr0]%}"
 
-PS1="[$PR_RED%n%(!.$PR_LIGHT_RED.$PR_LIGHT_WHITE)@%m%f $PR_LIGHT_CYAN%c%(!.$PR_LIGHT_RED]$PR_NO_COLOR.$PR_NO_COLOR]) %(!.#.$) "
+# CodeMonkeyMike/ZshTheme-CodeMachine
+function prompt_git() {
+  tester=$(git rev-parse --git-dir 2> /dev/null) || return
+
+  INDEX=$(git status --porcelain 2> /dev/null)
+  STATUS=""
+
+  #if $(echo "$(git log origin/$(current_branch)..HEAD 2> /dev/null)" | grep '^commit' &> /dev/null); then
+  #  STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_AHEAD"
+  #fi
+
+  if $(echo "$INDEX" | grep -E -e '^(D[ M]|[MARC][ MD]) ' &> /dev/null); then
+    STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_STAGED"
+  fi
+
+  if $(echo "$INDEX" | grep -E -e '^[ MARC][MD] ' &> /dev/null); then
+    STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_UNSTAGED"
+  fi
+
+  if $(echo "$INDEX" | grep '^?? ' &> /dev/null); then
+    STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_UNTRACKED"
+  fi
+
+  if $(echo "$INDEX" | grep -E -e '^(A[AU]|D[DU]|U[ADU]) ' &> /dev/null); then
+    STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_UNMERGED"
+  fi
+
+  if [[ -n $STATUS ]]; then
+    STATUS=" $STATUS"
+  fi
+
+  echo "$ZSH_THEME_GIT_PROMPT_PREFIX$(prompt_git_current_branch)$STATUS$ZSH_THEME_GIT_PROMPT_SUFFIX"
+}
+
+MY_TIME="%{$PR_LIGHT_WHITE%}%t%{$PR_NO_COLOR%}"
+MY_RETURN="%{$PR_LIGHT_YELLOW%}%?%{$PR_NO_COLOR%}"
+
+ZSH_THEME_PROMPT_RETURNCODE_PREFIX="%{$PR_RED%}"
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$PR_WHITE%}[%{$PR_YELLOW%}"
+ZSH_THEME_GIT_PROMPT_AHEAD="%{$PR_MAGENTA%}↑"
+ZSH_THEME_GIT_PROMPT_STAGED="%{$PR_GREEN%}●"
+ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$PR_RED%}●"
+ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$PR_WHITE%}●"
+ZSH_THEME_GIT_PROMPT_UNMERGED="%{$PR_RED%}✘"
+ZSH_THEME_GIT_PROMPT_SUFFIX=" $PR_WHITE]%{$PR_NO_COLOR%} "
+
+function prompt_git_current_branch() {
+  #echo $(current_branch || echo "(no branch)")
+}
+
+SSH="$PR_LIGHT_GREEN(ssh)$PR_NO_COLOR "
+
+function prompt_ssh() {
+  if [[ -n $SSH_CONNECTION ]]; then
+    echo $SSH;
+  fi
+}
+
+PROMPT="[${MY_RETURN}] $(prompt_ssh)$PR_LIGHT_MAGENTA%c %(!.$PR_LIGHT_RED.$PR_LIGHT_WHITE)%(!.#.$)$PR_NO_COLOR "
+RPROMPT_BASE="$(prompt_git)$PR_RED%n$PR_WHITE@%(!.$PR_LIGHT_RED.$PR_LIGHT_WHITE)%m%f$PR_NO_COLOR"
+
+function zle-line-init zle-keymap-select {
+VIM_PROMPT="%{$PR_LIGHT_WHITE%}[%{$PR_LIGHT_YELLOW%}vi mode %{$PR_LIGHT_RED%}NORMAL%{$PR_LIGHT_WHITE%}]%{$PR_NO_COLOR%}"
+RPROMPT="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $RPROMPT_BASE"
+  zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
 
 
 # lol how do I utf-8 with uclibc
 
-#LC_ALL='en_US.UTF-8'
-#LANG='en_US.UTF-8'
+LC_ALL='en_US.UTF-8'
+LANG='en_US.UTF-8'
 #LC_CTYPE=C
 CHARSET=UTF-8
 
