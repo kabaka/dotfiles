@@ -78,9 +78,9 @@ function prompt_git() {
   INDEX=$(git status --porcelain 2> /dev/null)
   STATUS=""
 
-  #if $(echo "$(git log origin/$(current_branch)..HEAD 2> /dev/null)" | grep '^commit' &> /dev/null); then
-  #  STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_AHEAD"
-  #fi
+  if $(echo "$(git log origin/$(git_current_branch)..HEAD 2> /dev/null)" | grep '^commit' &> /dev/null); then
+    STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_AHEAD"
+  fi
 
   if $(echo "$INDEX" | grep -E -e '^(D[ M]|[MARC][ MD]) ' &> /dev/null); then
     STATUS="$STATUS$ZSH_THEME_GIT_PROMPT_STAGED"
@@ -105,20 +105,22 @@ function prompt_git() {
   echo "$ZSH_THEME_GIT_PROMPT_PREFIX$(prompt_git_current_branch)$STATUS$ZSH_THEME_GIT_PROMPT_SUFFIX"
 }
 
-MY_TIME="%{$PR_LIGHT_WHITE%}%t%{$PR_NO_COLOR%}"
-MY_RETURN="%{$PR_LIGHT_YELLOW%}%?%{$PR_NO_COLOR%}"
+PROMPT_RETURN="%{$PR_LIGHT_YELLOW%}%?%{$PR_NO_COLOR%}"
 
-ZSH_THEME_PROMPT_RETURNCODE_PREFIX="%{$PR_RED%}"
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$PR_WHITE%}[%{$PR_YELLOW%}"
 ZSH_THEME_GIT_PROMPT_AHEAD="%{$PR_MAGENTA%}↑"
 ZSH_THEME_GIT_PROMPT_STAGED="%{$PR_GREEN%}●"
 ZSH_THEME_GIT_PROMPT_UNSTAGED="%{$PR_RED%}●"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$PR_WHITE%}●"
 ZSH_THEME_GIT_PROMPT_UNMERGED="%{$PR_RED%}✘"
-ZSH_THEME_GIT_PROMPT_SUFFIX=" $PR_WHITE]%{$PR_NO_COLOR%} "
+ZSH_THEME_GIT_PROMPT_SUFFIX="$PR_WHITE]%{$PR_NO_COLOR%} "
 
 function prompt_git_current_branch() {
-  #echo $(current_branch || echo "(no branch)")
+  echo $(git_current_branch || echo "(no branch)")
+}
+
+function git_current_branch() {
+  echo "$(git branch --no-color | cut -d' ' -f2-)"
 }
 
 SSH="$PR_LIGHT_GREEN(ssh)$PR_NO_COLOR "
@@ -129,7 +131,7 @@ function prompt_ssh() {
   fi
 }
 
-PROMPT="[${MY_RETURN}] $(prompt_ssh)$PR_LIGHT_MAGENTA%c %(!.$PR_LIGHT_RED.$PR_LIGHT_WHITE)%(!.#.$)$PR_NO_COLOR "
+PROMPT="[${PROMPT_RETURN}] $(prompt_ssh)$PR_LIGHT_MAGENTA%c %(!.$PR_LIGHT_RED.$PR_LIGHT_WHITE)%(!.#.$)$PR_NO_COLOR "
 RPROMPT_BASE="$(prompt_git)$PR_RED%n$PR_WHITE@%(!.$PR_LIGHT_RED.$PR_LIGHT_WHITE)%m%f$PR_NO_COLOR"
 
 function zle-line-init zle-keymap-select {
