@@ -31,21 +31,29 @@ autoload -U edit-command-line
 
 promptinit
 
+
 export GREP_COLOR="1;33"
 export GPGKEY="A30E6576"
 export KEYTIMEOUT=1
 
+PATH="$HOME/bin:$HOME/bin/local:$HOME/bin/local/node_modules/bin:/usr/local/bin:/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:$PATH"
+
+# default applications
+#
 SVN_EDITOR='vim'
 VISUAL='vim'
-PATH="$HOME/bin:$HOME/bin/local:$HOME/bin/local/node_modules/bin:/usr/local/bin:/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:$PATH"
+EDITOR='vim'
+
+PAGER='less'
+BROWSER='chromium-browser'
+
+
 TZ="UTC"
+
 HISTFILE=$HOME/.zhistory
 HISTSIZE=1000
 SAVEHIST=10000
 HOSTNAME="`hostname`"
-PAGER='less'
-EDITOR='vim'
-BROWSER='chromium-browser'
 
 # I am not really a fan of this color thing, but it was copy/pasted and I am
 # too lazy to change.
