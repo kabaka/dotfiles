@@ -106,8 +106,6 @@ function prompt_git() {
   echo "$ZSH_THEME_GIT_PROMPT_PREFIX$(prompt_git_current_branch)$STATUS$ZSH_THEME_GIT_PROMPT_SUFFIX"
 }
 
-PROMPT_RETURN="%{$PR_LIGHT_YELLOW%}%?%{$PR_NO_COLOR%}"
-
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$PR_WHITE%}[%{$PR_YELLOW%}"
 ZSH_THEME_GIT_PROMPT_AHEAD="%{$PR_MAGENTA%}↑"
 ZSH_THEME_GIT_PROMPT_STAGED="%{$PR_GREEN%}●"
@@ -132,7 +130,14 @@ function prompt_ssh() {
   fi
 }
 
-PROMPT='[${PROMPT_RETURN}] $(prompt_ssh)$PR_LIGHT_MAGENTA%c %(!.$PR_LIGHT_RED.$PR_LIGHT_WHITE)%#$PR_NO_COLOR '
+function prompt_return() {
+
+  if [[ $? -ne 0 ]]; then
+    echo "[%{$PR_LIGHT_RED%}%?%{$PR_NO_COLOR%}] "
+  fi
+}
+
+PROMPT='$(prompt_return)$(prompt_ssh)$PR_LIGHT_MAGENTA%c %(!.$PR_LIGHT_RED.$PR_LIGHT_WHITE)%#$PR_NO_COLOR '
 RPROMPT_BASE='$(prompt_git)$PR_RED%n$PR_WHITE@%(!.$PR_LIGHT_RED.$PR_LIGHT_WHITE)%m%f$PR_NO_COLOR'
 
 function zle-line-init zle-keymap-select {
