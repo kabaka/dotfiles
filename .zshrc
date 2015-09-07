@@ -12,6 +12,7 @@ setopt EXTENDED_HISTORY		# puts timestamps in the history
 #setopt HASH_CMDS		# turns on hashing
 setopt MENUCOMPLETE
 setopt ALL_EXPORT
+setopt PROMPT_SUBST
 
 setopt   notify globdots correct pushdtohome cdablevars autolist
 setopt   correctall autocd recexact longlistjobs
@@ -131,8 +132,8 @@ function prompt_ssh() {
   fi
 }
 
-PROMPT="[${PROMPT_RETURN}] $(prompt_ssh)$PR_LIGHT_MAGENTA%c %(!.$PR_LIGHT_RED.$PR_LIGHT_WHITE)%(!.#.$)$PR_NO_COLOR "
-RPROMPT_BASE="$(prompt_git)$PR_RED%n$PR_WHITE@%(!.$PR_LIGHT_RED.$PR_LIGHT_WHITE)%m%f$PR_NO_COLOR"
+PROMPT='[${PROMPT_RETURN}] $(prompt_ssh)$PR_LIGHT_MAGENTA%c %(!.$PR_LIGHT_RED.$PR_LIGHT_WHITE)%#$PR_NO_COLOR '
+RPROMPT_BASE='$(prompt_git)$PR_RED%n$PR_WHITE@%(!.$PR_LIGHT_RED.$PR_LIGHT_WHITE)%m%f$PR_NO_COLOR'
 
 function zle-line-init zle-keymap-select {
 VIM_PROMPT="%{$PR_LIGHT_WHITE%}[%{$PR_LIGHT_YELLOW%}vi mode %{$PR_LIGHT_RED%}NORMAL%{$PR_LIGHT_WHITE%}]%{$PR_NO_COLOR%}"
