@@ -150,7 +150,7 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 
 
-# lol how do I utf-8 with uclibc
+# lol how do I utf-8 with uclibcalpine
 
 LC_ALL='en_US.UTF-8'
 LANG='en_US.UTF-8'
@@ -165,12 +165,12 @@ done
 
 case $TERM in
   xterm) TERM=xterm-256color
-  ;;  
+  ;;
 esac
 
-#beep -f 220 -l 25 -d 25
-#beep -f 240 -l 25 -d 25
-#beep -f 260 -l 25
+beep -f 220 -l 25 -d 25
+beep -f 240 -l 25 -d 25
+beep -f 260 -l 25
 
 export PERL_LOCAL_LIB_ROOT="/home/kabaka/perl5";
 export PERL_MB_OPT="--install_base /home/kabaka/perl5";
