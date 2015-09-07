@@ -17,7 +17,7 @@ URxvt*internalBorder:  0
 
 ! Fonts
 
-URxvt*font:            xft:Hack:style=Regular:pixelsize=9:antialias=true:hinting=true
+URxvt*font:            xft:Hack:style=Regular:size=9:antialias=true:hinting=true
 !URxvt*letterSpace:     -2
 
 
