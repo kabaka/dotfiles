@@ -119,7 +119,7 @@ function prompt_git_current_branch() {
 }
 
 function git_current_branch() {
-  echo "$(git branch --no-color | cut -d' ' -f2-)"
+  echo "$(git branch --no-color | grep '\*' | cut -d' ' -f2-)"
 }
 
 SSH="$PR_LIGHT_GREEN(ssh)$PR_NO_COLOR "
