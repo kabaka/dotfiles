@@ -37,7 +37,9 @@ export GREP_COLOR="1;33"
 export GPGKEY="A30E6576"
 export KEYTIMEOUT=1
 
-PATH="$HOME/bin:$HOME/bin/local:$HOME/bin/local/node_modules/bin:/usr/local/bin:/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:$PATH"
+GOPATH=$HOME/projects/go/
+
+PATH="$HOME/bin:$HOME/bin/local:$HOME/bin/local/node_modules/bin:/usr/local/bin:/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:${GOPATH//://bin:}/bin:$PATH"
 
 # default applications
 #
