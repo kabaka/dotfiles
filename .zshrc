@@ -168,9 +168,9 @@ case $TERM in
   ;;
 esac
 
-beep -f 220 -l 25 -d 25
-beep -f 240 -l 25 -d 25
-beep -f 260 -l 25
+#beep -f 220 -l 25 -d 25
+#beep -f 240 -l 25 -d 25
+#beep -f 260 -l 25
 
 export PERL_LOCAL_LIB_ROOT="/home/kabaka/perl5";
 export PERL_MB_OPT="--install_base /home/kabaka/perl5";
