@@ -12,6 +12,7 @@ alias webserver='sudo thttpd -D -r -d . -p 8000 -l /dev/stdout -u kyle'
 #alias gc='/home/kabaka/software/gcalcli/gcalcli'
 alias x="chmod +x"
 alias pc="~/projects/PayCalc/pc.rb"
+alias g='git'
 alias gp='~/bin/genpass.rb'
 alias t='~/software/timebook/t'
 #alias start-alpine='tmux new ~/scripts/alpine-notify.sh'
