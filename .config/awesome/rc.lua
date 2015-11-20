@@ -19,6 +19,7 @@ wibox       = require("wibox")
 modkey      = "Mod4"
 terminal    = "urxvtc"
 screenshot  = "bin/ss.sh"
+slock       = "slock"
 editor      = os.getenv("EDITOR") or "vim"
 editor_cmd  = terminal .. " -e " .. editor
 
@@ -418,6 +419,7 @@ globalkeys = awful.util.table.join(
   -- Standard program
   awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal)   end),
   awful.key({ modkey, "Shift"   }, "Return", function () awful.util.spawn(screenshot) end),
+  awful.key({ modkey,           }, "q",      function () awful.util.spawn(slock)      end),
   awful.key({ modkey, "Control" }, "r", awesome.restart),
   awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
