@@ -17,9 +17,15 @@ URxvt*internalBorder:  0
 
 ! Fonts
 
-URxvt*font:            xft:Hack:style=Regular:size=10:antialias=true:hinting=true
+URxvt*font:            xft:Hack:size=9:antialias=true:hinting=true
+!URxvt*font:            xft:Hack-Regular:size=16:antialias=true:hinting=true
+!URxvt*boldFont:        xft:Hack-Bold:size=16:antialias=true:hinting=true
+!URxvt*italicFont:      xft:Hack-Italic:size=16:antialias=true:hinting=true
+!URxvt*font:            xft:Hack:size=10:antialias=true:hinting=true
+!URxvt*font:            xft:Monospace:style=Regular:size=10:antialias=true:hinting=true
 !URxvt*letterSpace:     -2
 
+URxvt*skipBuiltinGlyphs: true
 
 ! Line/Buffers
 
