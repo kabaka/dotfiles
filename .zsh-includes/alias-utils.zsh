@@ -19,4 +19,7 @@ alias t='~/software/timebook/t'
 alias ss='~/bin/ss.sh'
 alias mksh='echo "#!/bin/sh" >>'
 #alias grep='grep --color=auto'
-
+alias urldecode='python -c "import sys, urllib as ul; \
+      print ul.unquote_plus(sys.argv[1])"'
+alias urlencode='python -c "import sys, urllib as ul; \
+      print ul.quote_plus(sys.argv[1])"'

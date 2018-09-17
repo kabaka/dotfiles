@@ -81,3 +81,5 @@ zstyle ':completion:*:ssh:*' group-order \
    hosts-domain hosts-host users hosts-ipaddr
 zstyle '*' single-ignored show
 
+# vim rules to ignore compiled/binary files
+zstyle ':completion:*:*:vim?:*:*files' ignored-patterns '*.(a|o|so|pyc)'
