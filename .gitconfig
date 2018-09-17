@@ -1,8 +1,8 @@
 [user]
-	email = kyle@vacantminded.com
-	name = Kyle Johnson
+  email = kyle@vacantminded.com
+  name = Kyle Johnson
 [push]
-	default = simple
+  default = simple
 [alias]
   up = !git pull --rebase --prune $@ && git submodule update --init --recursive
   undo = reset HEAD~1 --mixed
