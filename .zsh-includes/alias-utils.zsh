@@ -1,4 +1,6 @@
-alias ls='ls --color=always'
+if [ $(uname) != 'Darwin']; then
+  alias ls='ls --color=always'
+fi
 #alias sl='ls --color=always'
 alias ndu='ncdu'
 alias v='vim'
