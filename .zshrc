@@ -32,6 +32,7 @@ autoload -U edit-command-line
 
 promptinit
 
+zstyle ':completion:*' users
 
 export GREP_COLOR="1;33"
 export GPGKEY="A30E6576"
@@ -39,7 +40,7 @@ export KEYTIMEOUT=1
 
 GOPATH=$HOME/projects/go/
 
-PATH="$HOME/bin:$HOME/bin/local:$HOME/bin/local/node_modules/bin:/usr/local/bin:/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:${GOPATH//://bin:}/bin:$PATH"
+PATH="$HOME/bin:$HOME/bin/local:$HOME/bin/local/node_modules/bin:$HOME/.cargo/bin/:/usr/local/bin:/usr/local/sbin/:/bin:/sbin:/usr/bin:/usr/sbin:${GOPATH//://bin:}/bin:/export/content/linkedin/bin:$PATH"
 
 # default applications
 #
@@ -54,7 +55,7 @@ BROWSER='chromium-browser'
 TZ="UTC"
 
 HISTFILE=$HOME/.zhistory
-HISTSIZE=1000
+HISTSIZE=10000
 SAVEHIST=10000
 HOSTNAME="`hostname`"
 
@@ -128,7 +129,7 @@ SSH="$PR_LIGHT_GREEN(ssh)$PR_NO_COLOR "
 
 function prompt_ssh() {
   if [[ -n $SSH_CONNECTION ]]; then
-    echo $SSH;
+    # echo $SSH;
   fi
 }
 
@@ -179,5 +180,5 @@ export PERL_MB_OPT="--install_base /home/kabaka/perl5";
 export PERL_MM_OPT="INSTALL_BASE=/home/kabaka/perl5";
 export PERL5LIB="/home/kabaka/perl5/lib/perl5/x86_64-linux-thread-multi:/home/kabaka/perl5/lib/perl5";
 export PATH="/home/kabaka/perl5/bin:$PATH";
-eval "$(dircolors ~/.dircolors)"
+#eval "$(dircolors ~/.dircolors)"
 
