@@ -1,21 +1,12 @@
-# macOS notification feedback for long-running or failed commands.
+# Notifications for long-running or failed commands on macOS.
 #
-# This replaces the legacy speaker beep implementation, which is not
-# available on modern macOS systems. When running on macOS with the built-in
-# `osascript` utility, the shell will surface notifications for
-# long-running commands as well as failures.
+# When `osascript` is available (i.e. on macOS), this script dispatches a
+# native notification any time a command fails or runs longer than LONG_TIME
+# seconds (default: 20s). In development environments that lack `osascript`
+# the same information is echoed to the terminal, which keeps the hooks
+# observable for testing without breaking interactive shells.
 
-# Guard early if notifications are not available (e.g. non-macOS systems).
-if [[ "$(uname -s)" != "Darwin" ]] || ! command -v osascript &>/dev/null; then
-  return
-fi
-
-# Defaults mirror the historical configuration: notify for commands in this
-# list when they exceed LONG_TIME seconds.
-: "${LONG_TIME:=20}"
-: "${ALERT_LONG_RUN:=./configure make amake cp rsync scp wget transmission aria2c}"
-
-# Track command state between hooks.
+# Track command state between the preexec and precmd hooks.
 typeset -gA _command_feedback_state
 _command_feedback_state=(
   start_time -1
@@ -23,9 +14,14 @@ _command_feedback_state=(
   last_command_name ""
 )
 
-# Convert the historic space-separated string into an array for matching.
-typeset -ga _command_feedback_monitored
-_command_feedback_monitored=(${=ALERT_LONG_RUN})
+# Delay notifications until commands run longer than LONG_TIME seconds.
+: "${LONG_TIME:=20}"
+
+# Detect the notification mechanism once so that the hook functions stay fast.
+typeset -g _command_feedback_notifier="osascript"
+if [[ "$(uname -s)" != "Darwin" ]] || ! command -v osascript &>/dev/null; then
+  _command_feedback_notifier="debug-log"
+fi
 
 autoload -Uz add-zsh-hook
 add-zsh-hook -d preexec _command_feedback_preexec 2>/dev/null || true
@@ -39,14 +35,27 @@ function _command_feedback_escape_applescript() {
   printf '%s' "$input" | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' -e 's/\n/ /g'
 }
 
+# Dispatch a notification using either AppleScript or a debug logger.
 function _command_feedback_notify() {
   emulate -L zsh
   local title message
-  title="$(_command_feedback_escape_applescript "$1")"
-  message="$(_command_feedback_escape_applescript "$2")"
-  osascript -e "display notification \"$message\" with title \"$title\""
+  title="$1"
+  message="$2"
+
+  case "$_command_feedback_notifier" in
+    osascript)
+      local escaped_title escaped_message
+      escaped_title="$(_command_feedback_escape_applescript "$title")"
+      escaped_message="$(_command_feedback_escape_applescript "$message")"
+      osascript -e "display notification \"$escaped_message\" with title \"$escaped_title\""
+      ;;
+    debug-log)
+      print -r -- "[command-notifications] $title — $message"
+      ;;
+  esac
 }
 
+# Capture the command text just before the shell executes it.
 function _command_feedback_preexec() {
   emulate -L zsh
   _command_feedback_state[start_time]=$SECONDS
@@ -57,17 +66,7 @@ function _command_feedback_preexec() {
   fi
 }
 
-function _command_feedback_command_tracked() {
-  emulate -L zsh
-  local candidate
-  for candidate in "${_command_feedback_monitored[@]}"; do
-    if [[ $candidate == ${_command_feedback_state[last_command_name]} ]]; then
-      return 0
-    fi
-  done
-  return 1
-}
-
+# Report on the command once the prompt is about to be shown again.
 function _command_feedback_precmd() {
   local exit_code=$?
   emulate -L zsh
@@ -84,7 +83,7 @@ function _command_feedback_precmd() {
     return
   fi
 
-  if (( duration >= LONG_TIME )) && _command_feedback_command_tracked; then
+  if (( duration >= LONG_TIME )); then
     _command_feedback_notify "Command finished" \
       "${_command_feedback_state[last_command_name]} completed in ${duration}s"
   fi
