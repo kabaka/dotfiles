@@ -1,4 +1,4 @@
-if [ $(uname) != 'Darwin']; then
+if [ $(uname) != 'Darwin' ]; then
   alias ls='ls --color=always'
 fi
 #alias sl='ls --color=always'
