@@ -162,8 +162,8 @@ CHARSET=UTF-8
 
 unsetopt ALL_EXPORT
 
-for f in ~/.zsh-includes/*; do
-  source $f
+for f in ~/.zsh-includes/*(.N); do
+  source "$f"
 done
 
 case $TERM in
