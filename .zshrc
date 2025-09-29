@@ -163,6 +163,12 @@ CHARSET=UTF-8
 unsetopt ALL_EXPORT
 autoload -U compinit; compinit
 
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv &>/dev/null; then
+  eval "$(pyenv init - zsh)"
+fi
+
 for f in ~/.zsh-includes/*(.N) ~/.zsh-includes/*(@N); do
   source "$f"
 done
@@ -182,7 +188,3 @@ export PERL_MM_OPT="INSTALL_BASE=/home/kabaka/perl5";
 export PERL5LIB="/home/kabaka/perl5/lib/perl5/x86_64-linux-thread-multi:/home/kabaka/perl5/lib/perl5";
 export PATH="/home/kabaka/perl5/bin:$PATH";
 #eval "$(dircolors ~/.dircolors)"
-
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - zsh)"
