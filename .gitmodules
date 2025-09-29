@@ -7,3 +7,6 @@
 [submodule ".config/awesome/vicious"]
 	path = .config/awesome/vicious
 	url = http://git.sysphere.org/vicious
+[submodule ".zsh-includes/fzf-tab"]
+	path = .zsh-includes/fzf-tab
+	url = https://github.com/Aloxaf/fzf-tab

@@ -161,6 +161,7 @@ LANG='en_US.UTF-8'
 CHARSET=UTF-8
 
 unsetopt ALL_EXPORT
+autoload -U compinit; compinit
 
 for f in ~/.zsh-includes/*(.N); do
   source "$f"
