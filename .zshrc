@@ -182,3 +182,6 @@ export PERL5LIB="/home/kabaka/perl5/lib/perl5/x86_64-linux-thread-multi:/home/ka
 export PATH="/home/kabaka/perl5/bin:$PATH";
 #eval "$(dircolors ~/.dircolors)"
 
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
