@@ -5,7 +5,9 @@ fh() {
 
 zle -N fh{,}
 
-bindkey '^r' 'fh'
+for keymap in emacs viins; do
+  bindkey -M $keymap '^R' fh 2>/dev/null
+done
 
 export FZF_DEFAULT_OPTS='
   --color fg:252,bg:233,hl:67,fg+:252,bg+:235,hl+:81
@@ -15,5 +17,7 @@ export FZF_DEFAULT_OPTS='
 [[ $- == *i* ]] && source "/home/kljohnso/.fzf/shell/completion.zsh" 2> /dev/null
 
 export FZF_COMPLETION_TRIGGER=''
-bindkey '^T' fzf-completion
-bindkey '^I' $fzf_default_completion
+for keymap in emacs viins; do
+  bindkey -M $keymap '^T' fzf-completion 2>/dev/null
+  [[ -n ${fzf_default_completion-} ]] && bindkey -M $keymap '^I' "$fzf_default_completion" 2>/dev/null
+done
