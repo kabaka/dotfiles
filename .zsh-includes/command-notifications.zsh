@@ -1,10 +1,9 @@
 # Notifications for long-running or failed commands on macOS.
 #
-# When `osascript` is available (i.e. on macOS), this script dispatches a
+# When `osascript` is available (typically on macOS), this script dispatches a
 # native notification any time a command fails or runs longer than LONG_TIME
-# seconds (default: 20s). In development environments that lack `osascript`
-# the same information is echoed to the terminal, which keeps the hooks
-# observable for testing without breaking interactive shells.
+# seconds (default: 20s). If AppleScript is unavailable the hooks quietly
+# disable themselves.
 
 # Track command state between the preexec and precmd hooks.
 typeset -gA _command_feedback_state
@@ -17,10 +16,12 @@ _command_feedback_state=(
 # Delay notifications until commands run longer than LONG_TIME seconds.
 : "${LONG_TIME:=20}"
 
-# Detect the notification mechanism once so that the hook functions stay fast.
+# Detect whether AppleScript is available once so that the hook functions stay
+# fast. If it is missing we skip sending notifications altogether because the
+# target environment cannot display them anyway.
 typeset -g _command_feedback_notifier="osascript"
-if [[ "$(uname -s)" != "Darwin" ]] || ! command -v osascript &>/dev/null; then
-  _command_feedback_notifier="debug-log"
+if ! command -v osascript &>/dev/null; then
+  _command_feedback_notifier=""
 fi
 
 autoload -Uz add-zsh-hook
@@ -35,24 +36,21 @@ function _command_feedback_escape_applescript() {
   printf '%s' "$input" | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g' -e 's/\n/ /g'
 }
 
-# Dispatch a notification using either AppleScript or a debug logger.
+# Dispatch a notification with AppleScript when available.
 function _command_feedback_notify() {
   emulate -L zsh
   local title message
   title="$1"
   message="$2"
 
-  case "$_command_feedback_notifier" in
-    osascript)
-      local escaped_title escaped_message
-      escaped_title="$(_command_feedback_escape_applescript "$title")"
-      escaped_message="$(_command_feedback_escape_applescript "$message")"
-      osascript -e "display notification \"$escaped_message\" with title \"$escaped_title\""
-      ;;
-    debug-log)
-      print -r -- "[command-notifications] $title — $message"
-      ;;
-  esac
+  if [[ -z $_command_feedback_notifier ]]; then
+    return
+  fi
+
+  local escaped_title escaped_message
+  escaped_title="$(_command_feedback_escape_applescript "$title")"
+  escaped_message="$(_command_feedback_escape_applescript "$message")"
+  osascript -e "display notification \"$escaped_message\" with title \"$escaped_title\""
 }
 
 # Capture the command text just before the shell executes it.
