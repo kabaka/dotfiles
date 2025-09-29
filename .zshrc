@@ -163,7 +163,7 @@ CHARSET=UTF-8
 unsetopt ALL_EXPORT
 autoload -U compinit; compinit
 
-for f in ~/.zsh-includes/*(.N); do
+for f in ~/.zsh-includes/*(.N) ~/.zsh-includes/*(@N); do
   source "$f"
 done
 
